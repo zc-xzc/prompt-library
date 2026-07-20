@@ -1,2 +1,51 @@
-# prompt-library
-Reusable prompts, workflows, and operating instructions for Codex and AI agents.
+# Prompt Library
+
+一个持续整理的可复用提示词库，用于 Codex 和其他 AI 智能体。这里保存的不只是几句话，而是经过实际任务验证、带有安全边界和验收标准的完整工作流程。
+
+## 快速使用
+
+1. 在下方目录中选择一个任务。
+2. 打开对应的 `prompt.md`，复制“可直接使用的提示词”。
+3. 按需修改提示词开头的参数，例如目标路径、软件名称或是否允许退出应用。
+4. 将完整内容发送给 Codex，并在执行结束后检查结果摘要。
+
+## 提示词目录
+
+| 分类 | 提示词 | 用途 |
+| --- | --- | --- |
+| macOS 维护 | [清理软件缓存与残留](prompts/macos-cleanup/prompt.md) | 审计并清理用户目录中的缓存、日志、临时文件和已完成的升级包，同时保护聊天记录、文档与账号数据 |
+
+## 仓库结构
+
+```text
+prompt-library/
+├── README.md
+├── CONTRIBUTING.md
+├── prompts/
+│   ├── README.md
+│   └── macos-cleanup/
+│       ├── prompt.md
+│       └── notes.md
+└── templates/
+    └── prompt-template.md
+```
+
+每个任务目录建议包含：
+
+- `prompt.md`：可以直接复制使用的完整提示词。
+- `notes.md`：适用场景、参数说明、风险边界和维护记录。
+
+## 设计原则
+
+- **结果明确**：先写清楚希望完成什么，再说明执行步骤。
+- **边界清晰**：明确哪些内容可以处理，哪些内容绝不能碰。
+- **可验证**：要求执行前后对比，并报告实际结果。
+- **可复用**：把容易变化的信息放在参数区，不把个人路径、账号或隐私写死。
+- **安全优先**：涉及删除、覆盖或对外发布时，限定精确目标并保留人工复核点。
+
+如需新增提示词，请从 [通用模板](templates/prompt-template.md) 开始，并参考 [贡献指南](CONTRIBUTING.md)。
+
+## License
+
+本仓库采用 [MIT License](LICENSE)。使用提示词执行具体操作时，仍需自行确认目标环境、数据备份和操作风险。
+
