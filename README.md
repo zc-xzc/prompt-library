@@ -14,6 +14,7 @@
 | 分类 | 提示词 | 用途 |
 | --- | --- | --- |
 | macOS 维护 | [清理软件缓存与残留](prompts/macos-cleanup/prompt.md) | 审计并清理用户目录中的缓存、日志、临时文件和已完成的升级包，同时保护聊天记录、文档与账号数据 |
+| 知识管理 | [对话自包含归档与恢复](prompts/conversation-archive/prompt.md) | 一键整理当前对话、代码和可访问附件，生成可在新对话中继续工作的独立备份 |
 
 ## 仓库结构
 
@@ -23,7 +24,10 @@ prompt-library/
 ├── CONTRIBUTING.md
 ├── prompts/
 │   ├── README.md
-│   └── macos-cleanup/
+│   ├── macos-cleanup/
+│   │   ├── prompt.md
+│   │   └── notes.md
+│   └── conversation-archive/
 │       ├── prompt.md
 │       └── notes.md
 └── templates/
@@ -48,4 +52,3 @@ prompt-library/
 ## License
 
 本仓库采用 [MIT License](LICENSE)。使用提示词执行具体操作时，仍需自行确认目标环境、数据备份和操作风险。
-
