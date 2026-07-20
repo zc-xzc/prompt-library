@@ -6,8 +6,8 @@
 
 | 目录 | 说明 |
 |------|------|
-| cademic-research/ | 学术研究相关提示词 |
+| academic-research/ | 学术研究相关提示词 |
 | knowledge-management/ | 知识管理提示词 |
-| elationships-and-communication/ | 人际关系与沟通 |
+| relationships-and-communication/ | 人际关系与沟通 |
 | system-maintenance/ | 系统维护提示词 |
-| 	ravel-planning/ | 旅行规划提示词 |
+| travel-planning/ | 旅行规划提示词 |
