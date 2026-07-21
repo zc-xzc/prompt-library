@@ -18,7 +18,7 @@
 
 ## 仓库结构
 
-`
+```text
 prompt-library/
 |-- README.md
 |-- CONTRIBUTING.md
@@ -32,7 +32,7 @@ prompt-library/
 |       |-- README.md
 |-- templates/
     |-- prompt-template.md
-`
+```
 
 每个任务目录：
 
