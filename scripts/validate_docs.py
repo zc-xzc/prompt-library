@@ -63,31 +63,22 @@ def validate_markdown(path: Path, text: str) -> None:
             WARNINGS.append(f"{path.relative_to(ROOT)}: broken local link: {raw_target}")
 
 
-def validate_prompt_layout() -> None:
-    prompts = ROOT / "prompts"
-    if not prompts.is_dir():
-        ERRORS.append("missing prompts directory")
+def validate_skills_structure() -> None:
+    skills = ROOT / "skills"
+    if not skills.is_dir():
+        ERRORS.append("missing skills directory")
         return
-    for category in prompts.iterdir():
+    for category in skills.iterdir():
         if not category.is_dir():
             continue
         category_readme = category / "README.md"
         if not category_readme.is_file():
             ERRORS.append(f"missing category README: {category_readme.relative_to(ROOT)}")
-        for directory in category.iterdir():
-            if not directory.is_dir():
-                continue
-            prompt = directory / f"{directory.name}.md"
-            readme = directory / "README.md"
-            if not prompt.is_file():
-                ERRORS.append(f"missing prompt file: {prompt.relative_to(ROOT)}")
-            if not readme.is_file():
-                ERRORS.append(f"missing prompt README: {readme.relative_to(ROOT)}")
 
 
 def main() -> int:
     validate_text_files()
-    validate_prompt_layout()
+    validate_skills_structure()
     if WARNINGS:
         for w in WARNINGS:
             print(f"WARNING: {w}")
