@@ -13,8 +13,11 @@
 
 | 分类 | 提示词 | 用途 |
 | --- | --- | --- |
-| macOS 维护 | [清理软件缓存与残留](prompts/macos-cleanup/macos-cleanup.md) | 审计并清理用户目录中的缓存、日志、临时文件和已完成的升级包，同时保护聊天记录、文档与账号数据 |
-| 知识管理 | [对话自包含归档与恢复](prompts/conversation-archive/conversation-archive.md) | 一键整理当前对话、代码和可访问附件，生成可在新对话中继续工作的独立备份 |
+| [系统维护](prompts/system-maintenance/README.md) | [清理 macOS 软件缓存与残留](prompts/system-maintenance/macos-cleanup/macos-cleanup.md) | 审计并清理用户目录中的缓存、日志、临时文件和已完成的升级包，同时保护聊天记录、文档与账号数据 |
+| [知识管理](prompts/knowledge-management/README.md) | [对话自包含归档与恢复](prompts/knowledge-management/conversation-archive/conversation-archive.md) | 整理当前可见的对话、代码和附件，生成可在新对话中继续工作的独立备份 |
+| [人际关系与沟通](prompts/relationships-and-communication/README.md) | [人际交往思考指南：尊重与边界](prompts/relationships-and-communication/interpersonal-boundary-guide/interpersonal-boundary-guide.md) | 分析关系边界与互动节奏，帮助减少过度付出、误读信号与社交内耗 |
+
+旅行规划和学术研究分类已预留，后续可直接在相应目录下新增提示词包。
 
 ## 仓库结构
 
@@ -24,17 +27,20 @@ prompt-library/
 |-- CONTRIBUTING.md
 |-- prompts/
 |   |-- README.md
-|   |-- macos-cleanup/
-|   |   |-- macos-cleanup.md
+|   |-- system-maintenance/
 |   |   |-- README.md
-|   |-- conversation-archive/
-|       |-- conversation-archive.md
-|       |-- README.md
+|   |   `-- macos-cleanup/
+|   |-- knowledge-management/
+|   |   `-- conversation-archive/
+|   |-- relationships-and-communication/
+|   |   `-- interpersonal-boundary-guide/
+|   |-- travel-planning/
+|   `-- academic-research/
 |-- templates/
     |-- prompt-template.md
 ```
 
-每个任务目录：
+每个大类目录包含一个 README，用于说明适用范围并索引其下的提示词。每个具体提示词目录包含：
 
 - 以目录名命名的 .md 文件（如 conversation-archive.md）：可直接复制使用的完整提示词。
 - README.md：适用场景、参数说明、风险边界和维护记录（GitHub 自动渲染为目录首页）。

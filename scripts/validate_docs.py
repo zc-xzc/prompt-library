@@ -52,15 +52,21 @@ def validate_prompt_layout() -> None:
     if not prompts.is_dir():
         ERRORS.append("missing prompts directory")
         return
-    for directory in prompts.iterdir():
-        if not directory.is_dir():
+    for category in prompts.iterdir():
+        if not category.is_dir():
             continue
-        prompt = directory / f"{directory.name}.md"
-        readme = directory / "README.md"
-        if not prompt.is_file():
-            ERRORS.append(f"missing prompt file: {prompt.relative_to(ROOT)}")
-        if not readme.is_file():
-            ERRORS.append(f"missing prompt README: {readme.relative_to(ROOT)}")
+        category_readme = category / "README.md"
+        if not category_readme.is_file():
+            ERRORS.append(f"missing category README: {category_readme.relative_to(ROOT)}")
+        for directory in category.iterdir():
+            if not directory.is_dir():
+                continue
+            prompt = directory / f"{directory.name}.md"
+            readme = directory / "README.md"
+            if not prompt.is_file():
+                ERRORS.append(f"missing prompt file: {prompt.relative_to(ROOT)}")
+            if not readme.is_file():
+                ERRORS.append(f"missing prompt README: {readme.relative_to(ROOT)}")
 
 
 def main() -> int:
