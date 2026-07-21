@@ -10,8 +10,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 TEXT_SUFFIXES = {".md", ".json", ".py", ".yml", ".yaml"}
+SKIP_DIRS = {"node_modules", "__pycache__", ".git", ".github", "venv", "templates", "examples"}
 SKIP_DIRS = {"node_modules", "__pycache__", ".git", ".github", "venv", ".venv", "env", "templates", "examples"}
 ERRORS: list[str] = []
+WARNINGS: list[str] = []
 WARNINGS: list[str] = []
 
 
@@ -22,6 +24,8 @@ def report(path: Path, message: str) -> None:
 def validate_text_files() -> None:
     for path in ROOT.rglob("*"):
         if not path.is_file() or path.suffix.lower() not in TEXT_SUFFIXES:
+            continue
+        if any(part in SKIP_DIRS for part in path.parts):
             continue
         if any(part in SKIP_DIRS for part in path.parts):
             continue
@@ -88,6 +92,9 @@ def validate_prompt_layout() -> None:
 def main() -> int:
     validate_text_files()
     validate_prompt_layout()
+    if WARNINGS:
+        for w in WARNINGS:
+            print(f"WARNING: {w}")
     if WARNINGS:
         for w in WARNINGS:
             print(f"WARNING: {w}")
