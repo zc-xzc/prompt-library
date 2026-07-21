@@ -5,7 +5,7 @@
 ## 快速使用
 
 1. 在下方目录中选择一个任务。
-2. 打开对应的 `prompt.md`，复制“可直接使用的提示词”。
+2. 打开对应的提示词文件，复制“可直接使用的提示词”。
 3. 按需修改提示词开头的参数，例如目标路径、软件名称或是否允许退出应用。
 4. 将完整内容发送给 Codex，并在执行结束后检查结果摘要。
 
@@ -13,31 +13,31 @@
 
 | 分类 | 提示词 | 用途 |
 | --- | --- | --- |
-| macOS 维护 | [清理软件缓存与残留](prompts/macos-cleanup/prompt.md) | 审计并清理用户目录中的缓存、日志、临时文件和已完成的升级包，同时保护聊天记录、文档与账号数据 |
-| 知识管理 | [对话自包含归档与恢复](prompts/conversation-archive/prompt.md) | 一键整理当前对话、代码和可访问附件，生成可在新对话中继续工作的独立备份 |
+| macOS 维护 | [清理软件缓存与残留](prompts/macos-cleanup/macos-cleanup.md) | 审计并清理用户目录中的缓存、日志、临时文件和已完成的升级包，同时保护聊天记录、文档与账号数据 |
+| 知识管理 | [对话自包含归档与恢复](prompts/conversation-archive/conversation-archive.md) | 一键整理当前对话、代码和可访问附件，生成可在新对话中继续工作的独立备份 |
 
 ## 仓库结构
 
-```text
+`
 prompt-library/
-├── README.md
-├── CONTRIBUTING.md
-├── prompts/
-│   ├── README.md
-│   ├── macos-cleanup/
-│   │   ├── prompt.md
-│   │   └── notes.md
-│   └── conversation-archive/
-│       ├── prompt.md
-│       └── notes.md
-└── templates/
-    └── prompt-template.md
-```
+|-- README.md
+|-- CONTRIBUTING.md
+|-- prompts/
+|   |-- README.md
+|   |-- macos-cleanup/
+|   |   |-- macos-cleanup.md
+|   |   |-- README.md
+|   |-- conversation-archive/
+|       |-- conversation-archive.md
+|       |-- README.md
+|-- templates/
+    |-- prompt-template.md
+`
 
-每个任务目录建议包含：
+每个任务目录：
 
-- `prompt.md`：可以直接复制使用的完整提示词。
-- `notes.md`：适用场景、参数说明、风险边界和维护记录。
+- 以目录名命名的 .md 文件（如 conversation-archive.md）：可直接复制使用的完整提示词。
+- README.md：适用场景、参数说明、风险边界和维护记录（GitHub 自动渲染为目录首页）。
 
 ## 设计原则
 
