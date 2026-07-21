@@ -20,4 +20,5 @@
 
 ## [学术研究](academic-research/README.md)
 
-分类已建立，等待加入文献检索、阅读、论文写作和研究计划等提示词。
+- [Nature Agent：学术研究工作流](academic-research/nature-agent/nature-agent.md)
+- [Academic Tools：研究工具选择与使用](academic-research/academic-tools/academic-tools.md)
