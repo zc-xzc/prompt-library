@@ -1,112 +1,84 @@
 ---
 name: adaptyv
-description: Cloud laboratory platform for automated protein testing and validation. Use when designing proteins and needing experimental validation including binding assays, expression testing, thermostability measurements, enzyme activity assays, or protein sequence optimization. Also use for submitting experiments via API, tracking experiment status, downloading results, optimizing protein sequences for better expression using computational tools (NetSolP, SoluProt, SolubleMPNN, ESM), or managing protein design workflows with wet-lab validation.
-license: Unknown
-metadata:
-    skill-author: K-Dense Inc.
+description: "How to use the Adaptyv Bio Foundry API and Python SDK for protein experiment design, submission, and results retrieval. Use whenever the user mentions Adaptyv, Foundry API, protein binding assays, protein screening experiments, BLI/SPR assays, thermostability assays, or wants to submit protein sequences for experimental characterization."
 ---
 
-# Adaptyv
+# Adaptyv Bio Foundry API
 
-Adaptyv is a cloud laboratory platform that provides automated protein testing and validation services. Submit protein sequences via API or web interface and receive experimental results in approximately 21 days.
+Adaptyv Bio is a cloud lab that turns protein sequences into experimental data. Users submit amino acid sequences via API or UI; Adaptyv's automated lab runs assays (binding, thermostability, expression, fluorescence) and delivers results in ~21 days.
 
 ## Quick Start
 
-### Authentication Setup
-
-Adaptyv requires API authentication. Set up your credentials:
-
-1. Contact support@adaptyvbio.com to request API access (platform is in alpha/beta)
-2. Receive your API access token
-3. Set environment variable:
+**Base URL:** `https://foundry-api-public.adaptyvbio.com/api/v1`
+**Authentication:** Bearer token in the `Authorization` header.
 
 ```bash
-export ADAPTYV_API_KEY="your_api_key_here"
+export FOUNDRY_API_TOKEN="abs0_..."
+curl https://foundry-api-public.adaptyvbio.com/api/v1/targets?limit=3 \
+  -H "Authorization: Bearer $FOUNDRY_API_TOKEN"
 ```
 
-Or create a `.env` file:
+Store tokens in environment variables or `.env` files — never commit them to source control.
 
-```
-ADAPTYV_API_KEY=your_api_key_here
-```
+## Python SDK
 
-### Installation
+Install: `pip install adaptyv-sdk`
 
-Install the required package using uv:
-
+**Environment variables:**
 ```bash
-uv pip install requests python-dotenv
+ADAPTYV_API_KEY=your_api_key
+ADAPTYV_API_URL=https://foundry-api-public.adaptyvbio.com/api/v1
 ```
 
-### Basic Usage
-
-Submit protein sequences for testing:
+### Decorator Pattern
 
 ```python
-import os
-import requests
-from dotenv import load_dotenv
+from adaptyv import lab
 
-load_dotenv()
+@lab.experiment(target="PD-L1", experiment_type="screening", method="bli")
+def design_binders():
+    return {"design_a": "MVKVGVNG...", "design_b": "MKVLVAG..."}
 
-api_key = os.getenv("ADAPTYV_API_KEY")
-base_url = "https://kq5jp7qj7wdqklhsxmovkzn4l40obksv.lambda-url.eu-central-1.on.aws"
-
-headers = {
-    "Authorization": f"Bearer {api_key}",
-    "Content-Type": "application/json"
-}
-
-# Submit experiment
-response = requests.post(
-    f"{base_url}/experiments",
-    headers=headers,
-    json={
-        "sequences": ">protein1\nMKVLWALLGLLGAA...",
-        "experiment_type": "binding",
-        "webhook_url": "https://your-webhook.com/callback"
-    }
-)
-
-experiment_id = response.json()["experiment_id"]
+result = design_binders()
+print(f"Experiment: {result.experiment_url}")
 ```
 
-## Available Experiment Types
-Adaptyv supports multiple assay types:
-- **Binding assays** - Test protein-target interactions using biolayer interferometry
-- **Expression testing** - Measure protein expression levels
-- **Thermostability** - Characterize protein thermal stability
-- **Enzyme activity** - Assess enzymatic function
+### Client Pattern
 
-See `reference/experiments.md` for detailed information on each experiment type and workflows.
+```python
+from adaptyv import FoundryClient
 
-## Protein Sequence Optimization
-Before submitting sequences, optimize them for better expression and stability:
+client = FoundryClient(api_key="...", base_url="https://foundry-api-public.adaptyvbio.com/api/v1")
 
-**Common issues to address:**
-- Unpaired cysteines that create unwanted disulfides
-- Excessive hydrophobic regions causing aggregation
-- Poor solubility predictions
+targets = client.targets.list(search="EGFR", selfservice_only=True)
+estimate = client.experiments.cost_estimate({...})
+exp = client.experiments.create({...})
+client.experiments.submit(exp.experiment_id)
+results = client.experiments.get_results(exp.experiment_id)
+```
 
-**Recommended tools:**
-- NetSolP / SoluProt - Initial solubility filtering
-- SolubleMPNN - Sequence redesign for improved solubility
-- ESM - Sequence likelihood scoring
-- ipTM - Interface stability assessment
-- pSAE - Hydrophobic exposure quantification
+## Experiment Types
 
-See `reference/protein_optimization.md` for detailed optimization workflows and tool usage.
+| Type | Method | Measures | Requires Target |
+|---|---|---|---|
+| affinity | bli or spr | KD, kon, koff kinetics | Yes |
+| screening | bli or spr | Yes/no binding | Yes |
+| thermostability | — | Melting temperature (Tm) | No |
+| expression | — | Expression yield | No |
+| fluorescence | — | Fluorescence intensity | No |
 
-## API Reference
-For complete API documentation including all endpoints, request/response formats, and authentication details, see `reference/api_reference.md`.
+## Experiment Lifecycle
 
-## Examples
-For concrete code examples covering common use cases (experiment submission, status tracking, result retrieval, batch processing), see `reference/examples.md`.
+Draft → WaitingForConfirmation → QuoteSent → WaitingForMaterials → InQueue → InProduction → DataAnalysis → InReview → Done
 
-## Important Notes
-- Platform is currently in alpha/beta phase with features subject to change
-- Not all platform features are available via API yet
-- Results typically delivered in ~21 days
-- Contact support@adaptyvbio.com for access requests or questions
-- Suitable for high-throughput AI-driven protein design workflows
+## Error Handling
 
+All errors return:
+```json
+{
+  "error": "Human-readable description",
+  "request_id": "req_xxx"
+}
+```
+
+Include `request_id` when contacting support.

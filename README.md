@@ -1,6 +1,6 @@
 # 🧠 Codex Skills Library
 
-> **190 个 Codex 技能 · 13 大类 · 按用途分子目录**
+> **198 个 Codex 技能 · 16 大类 · 按用途分子目录**
 
 ## 📂 目录说明
 
@@ -9,7 +9,7 @@
 | skills/ | 190 个 Codex 技能，按 13 个分类整理 |
 | prompts/ | 提示词模板与使用示例 |
 | scripts/ | 仓库工具脚本（文档验证等） |
-| 	emplates/ | 项目模板文件 |
+| templates/ | 项目模板文件 |
 
 ## 📊 技能总览
 
@@ -27,5 +27,8 @@
 | 🏥 clinical-medical | 6 | — |
 | 🀄 chinese-academic | 5 | — |
 | 🤖 ai-automation | 8 | — |
-| 🛠️ system-tools | 6 | — |
-| **合计** | **190** | |
+| 🛠️ system-tools | 8 | schedule, consolidate-memory |
+| 📱 ui-design | 1 | frontend-design |
+| 🎓 academic-research | 4 | nature-paper2ppt, nature-citation, nature-academic-search, bgpt-paper-search |
+| 🗺️ travel-planning | 1 | qinggan-loop-planner |
+| **合计** | **198** | |
