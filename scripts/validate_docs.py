@@ -68,12 +68,18 @@ def validate_skills_structure() -> None:
     if not skills.is_dir():
         ERRORS.append("missing skills directory")
         return
-    for category in skills.iterdir():
-        if not category.is_dir():
+    for domain in skills.iterdir():
+        if not domain.is_dir():
             continue
-        category_readme = category / "README.md"
-        if not category_readme.is_file():
-            ERRORS.append(f"missing category README: {category_readme.relative_to(ROOT)}")
+        domain_readme = domain / "README.md"
+        if not domain_readme.is_file():
+            ERRORS.append(f"missing domain README: {domain_readme.relative_to(ROOT)}")
+        for category in domain.iterdir():
+            if not category.is_dir():
+                continue
+            category_readme = category / "README.md"
+            if not category_readme.is_file():
+                ERRORS.append(f"missing category README: {category_readme.relative_to(ROOT)}")
 
 
 def main() -> int:
