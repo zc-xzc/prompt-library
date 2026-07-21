@@ -5,9 +5,10 @@
 ## 新增提示词
 
 1. 复制 `templates/prompt-template.md`。
-2. 在 `prompts/` 下创建一个小写英文、以连字符分隔的目录，例如 `pdf-review`。
-3. 将可复制内容保存为与目录同名的 `.md` 文件（如 `pdf-review.md`），补充说明保存为 `README.md`。
-4. 在 `prompts/README.md` 和仓库根目录的 `README.md` 中增加入口。
+2. 先选择最贴切的大类；没有合适大类时，创建一个小写英文、以连字符分隔的新分类目录，并补充该分类的 `README.md`。
+3. 在 `prompts/<分类>/` 下创建一个小写英文、以连字符分隔的提示词目录，例如 `academic-research/pdf-review`。
+4. 将可复制内容保存为与目录同名的 `.md` 文件（如 `pdf-review.md`），补充说明保存为 `README.md`。
+5. 在分类 README、`prompts/README.md` 和仓库根目录的 `README.md` 中增加入口。
 
 ## 提交前检查
 
