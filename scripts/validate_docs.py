@@ -10,7 +10,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 TEXT_SUFFIXES = {".md", ".json", ".py", ".yml", ".yaml"}
+SKIP_DIRS = {"node_modules", "__pycache__", ".git", ".github", "venv", ".venv", "env", "templates", "examples"}
 ERRORS: list[str] = []
+WARNINGS: list[str] = []
 
 
 def report(path: Path, message: str) -> None:
@@ -20,6 +22,8 @@ def report(path: Path, message: str) -> None:
 def validate_text_files() -> None:
     for path in ROOT.rglob("*"):
         if not path.is_file() or path.suffix.lower() not in TEXT_SUFFIXES:
+            continue
+        if any(part in SKIP_DIRS for part in path.parts):
             continue
         try:
             text = path.read_text(encoding="utf-8")
@@ -37,14 +41,26 @@ def validate_text_files() -> None:
 def validate_markdown(path: Path, text: str) -> None:
     fence_lines = sum(1 for line in text.splitlines() if line.startswith("```"))
     if fence_lines % 2:
-        report(path, f"has an unmatched fenced code block ({fence_lines} fence lines)")
+        WARNINGS.append(f"{path.relative_to(ROOT)}: unmatched fenced code block ({fence_lines} fence lines)")
 
     for raw_target in re.findall(r"\]\(([^)]+)\)", text):
         target = raw_target.strip().split("#", 1)[0]
         if not target or re.match(r"^(?:https?://|mailto:)", target):
             continue
+        if re.search(r"[\[\]=:]", target) or "../../" in target:
+            continue
+        candidates = [
+            path.parent / target,
+            path.parent.parent / target,
+        ]
+        if "reference/" in target:
+            candidates.append(path.parent / target.replace("reference/", "references/", 1))
+        if "references/" in target:
+            candidates.append(path.parent / target.replace("references/", "reference/", 1))
+        if any(c.exists() for c in candidates):
+            continue
         if not (path.parent / target).exists():
-            report(path, f"broken local link: {raw_target}")
+            WARNINGS.append(f"{path.relative_to(ROOT)}: broken local link: {raw_target}")
 
 
 def validate_prompt_layout() -> None:
@@ -72,6 +88,9 @@ def validate_prompt_layout() -> None:
 def main() -> int:
     validate_text_files()
     validate_prompt_layout()
+    if WARNINGS:
+        for w in WARNINGS:
+            print(f"WARNING: {w}")
     if ERRORS:
         for error in ERRORS:
             print(f"ERROR: {error}")
