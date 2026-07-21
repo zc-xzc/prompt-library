@@ -30,7 +30,7 @@ skills/
 │   ├── quantum-computing/               4 skills
 │   └── geospatial/                      2 skills
 │
-└── 🛠️ productivity/         21 items   文档 + 系统 + 生活
+└── 🛠️ productivity/         20 items   文档 + 系统 + 生活
     ├── documents-presentations/         7 skills
     ├── system-tools/                    8 skills
     ├── system-maintenance/              1 prompt
