@@ -92,7 +92,7 @@ def main() -> int:
         for error in ERRORS:
             print(f"ERROR: {error}")
         return 1
-    print("prompt-library validation passed")
+    print("skill-library validation passed")
     return 0
 
 

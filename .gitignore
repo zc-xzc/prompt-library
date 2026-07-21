@@ -1,0 +1,16 @@
+# Generated dependencies and package caches
+node_modules/
+.pnpm-store/
+.npm/
+
+# Python environments and generated files
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+
+# Build output and local tooling
+dist/
+build/
+.DS_Store

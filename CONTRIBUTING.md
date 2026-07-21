@@ -26,6 +26,7 @@
 - 是否为高影响操作设置清晰边界
 - 是否写明验证方法
 - 是否移除敏感信息
+- 不提交生成的依赖、构建产物或本地环境文件（例如 `node_modules/`、`.venv/`、`dist/`）
 - 运行 `python scripts/validate_docs.py` 并确认通过
 
 ## 写作约定
